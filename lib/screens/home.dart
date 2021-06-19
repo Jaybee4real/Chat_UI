@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_ui/widgets/category_selector.dart';
 import 'package:flutter_chat_ui/widgets/favorite_contacts.dart';
+import 'package:flutter_chat_ui/widgets/drawer.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -12,13 +13,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
+      drawer: Drawer(
+        child: AppDrawer()
+      ),
       appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.menu),
-            color: Colors.white,
-            iconSize: 30.0,
-            onPressed: () {},
-          ),
           elevation: 0.0,
           actions: <Widget>[
             IconButton(
@@ -48,7 +46,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       decoration: BoxDecoration(
                           color: Colors.white,
                           boxShadow: [
-                            BoxShadow(color: Colors.grey.shade200, blurRadius: 5, offset: Offset(-1, -5)),
+                            BoxShadow(
+                                color: Colors.grey.shade200,
+                                blurRadius: 5,
+                                offset: Offset(-1, -5)),
                           ],
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(25.0),
