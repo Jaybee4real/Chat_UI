@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_chat_ui/models/message_model.dart';
 import 'package:flutter_chat_ui/models/user_model.dart';
 
@@ -64,6 +65,33 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
+  _messageComposer() {
+    return Container(
+        padding: EdgeInsets.symmetric(horizontal: 10.0),
+        height: 70.0,
+        color: Colors.white,
+        child: Row(children: <Widget>[
+          IconButton(
+            icon: Icon(Icons.photo),
+            iconSize: 25.0,
+            color: Theme.of(context).primaryColor,
+            onPressed: () {},
+          ),
+          Expanded(
+              child: TextField(
+            textCapitalization: TextCapitalization.sentences,
+            decoration: InputDecoration.collapsed(hintText: "Send A Message"),
+            onChanged: (value) {},
+          )),
+          IconButton(
+            icon: Icon(Icons.send),
+            iconSize: 25.0,
+            color: Theme.of(context).primaryColor,
+            onPressed: () {},
+          )
+        ]));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,32 +108,36 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                  color: Colors.white,
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Column(
+          children: [
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(25.0),
+                        topRight: Radius.circular(25.00))),
+                child: ClipRRect(
                   borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(25.0),
-                      topRight: Radius.circular(25.00))),
-              child: ClipRRect(
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30.0),
-                    topRight: Radius.circular(30.0)),
-                child: ListView.builder(
-                    reverse: true,
-                    padding: EdgeInsets.only(top: 16.0),
-                    itemCount: messages.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      final Message message = messages[index];
-                      bool isMe = message.sender.id == currentUser.id;
-                      return _buildMessage(message, isMe);
-                    }),
+                      topLeft: Radius.circular(30.0),
+                      topRight: Radius.circular(30.0)),
+                  child: ListView.builder(
+                      reverse: true,
+                      padding: EdgeInsets.only(top: 16.0),
+                      itemCount: messages.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        final Message message = messages[index];
+                        bool isMe = message.sender.id == currentUser.id;
+                        return _buildMessage(message, isMe);
+                      }),
+                ),
               ),
             ),
-          ),
-        ],
+            _messageComposer()
+          ],
+        ),
       ),
     );
   }
