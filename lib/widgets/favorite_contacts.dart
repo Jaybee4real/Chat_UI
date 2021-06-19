@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_ui/models/message_model.dart';
+import 'package:flutter_chat_ui/screens/chat_screen.dart';
 
 class FavoriteContacts extends StatelessWidget {
   @override
@@ -25,27 +26,38 @@ class FavoriteContacts extends StatelessWidget {
               ],
             ),
           ),
-          Container(  
+          Container(
             height: 120.0,
-            child: ListView.builder(
-                padding: EdgeInsets.only(left: 10.0),
-                itemCount: favorites.length,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (BuildContext context, int index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      children: [
-                        CircleAvatar(
-                          radius: 35.0,
-                          backgroundImage: AssetImage(favorites[index].imageUrl),
+            child: GestureDetector(
+              child: ListView.builder(
+                  padding: EdgeInsets.only(left: 10.0),
+                  itemCount: favorites.length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (BuildContext context, int index) {
+                    return GestureDetector(
+                      onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  ChatScreen(user: favorites[index]))),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Column(
+                          children: [
+                            CircleAvatar(
+                              radius: 35.0,
+                              backgroundImage:
+                                  AssetImage(favorites[index].imageUrl),
+                            ),
+                            SizedBox(height: 10.0),
+                            Text(favorites[index].name,
+                                style: TextStyle(color: Colors.blueGrey))
+                          ],
                         ),
-                        SizedBox(height: 10.0),
-                        Text(favorites[index].name, style: TextStyle(color: Colors.blueGrey))
-                      ],
-                    ),
-                  );
-                }),
+                      ),
+                    );
+                  }),
+            ),
           )
         ],
       ),
